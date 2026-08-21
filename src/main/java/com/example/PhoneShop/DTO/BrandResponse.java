@@ -1,5 +1,6 @@
 package com.example.PhoneShop.DTO;
 
+import com.example.PhoneShop.Entity.BrandEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
