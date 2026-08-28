@@ -48,6 +48,7 @@ public class BrandServiceImpl implements BrandService {
         brandRepository.delete(brandEntity);
     }
 
+
     @Override
     public BrandResponse getBrand(Long brandId) {
         BrandEntity brandEntity = brandRepository.findById(brandId)
