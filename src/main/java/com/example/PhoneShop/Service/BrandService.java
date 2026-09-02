@@ -13,6 +13,7 @@ public interface BrandService {
     BrandResponse updateBrand(Long brandId, BrandRequest brandRequest);
     void deleteBrand(Long brandId);
     BrandResponse getBrand(Long brandId);
+    BrandEntity getById(Long brandId);
     List<BrandResponse> getBrands();
     Page<BrandEntity> getBrands(Map<String, String> params);
 }
