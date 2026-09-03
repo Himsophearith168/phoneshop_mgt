@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/001_init_db_structure.yml
+  - include:
+      file: classpath:db/changelog/002_insert_brands.yml
+  - include:
+      file: classpath:db/changelog/003_insert_models.yml

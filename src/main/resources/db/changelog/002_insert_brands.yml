@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002_insert_brands
+      author: himsophearith44@gmail.com
+      changes:
+        - loadData:
+            tableName: brands
+            columns:
+              - column:
+                  name: brand_name
+                  type: STRING
+              - column:
+                  name: description
+                  type: STRING
+            file: classpath:db/data/002_brands.csv

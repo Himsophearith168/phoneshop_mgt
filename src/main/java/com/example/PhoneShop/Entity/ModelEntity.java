@@ -10,9 +10,13 @@ import lombok.Data;
 public class ModelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "modelID")
+    @Column(name = "models_id")
     private Long id;
+
+    @Column(name = "model_name")
     private String modelName;
+
+    @Column(name = "description")
     private String description;
 
     @ManyToOne

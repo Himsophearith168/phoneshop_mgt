@@ -18,8 +18,13 @@ import lombok.NoArgsConstructor;
 public class BrandEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "brand_id")
     private Long id;
+
+    @Column(name = "brand_name")
     private String name;
+
+    @Column(name = "description")
     private String description;
 
 }

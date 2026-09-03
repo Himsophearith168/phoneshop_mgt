@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003_insert_models
+      author: himsophearith44@gmail.com
+      changes:
+        - loadData:
+            tableName: models
+            file: classpath:db/data/003_models.csv
+            columns:
+              - column:
+                  name: model_name
+                  header: model_name
+                  type: STRING
+              - column:
+                  name: brand_id
+                  header: brand_id
+                  type: NUMERIC
