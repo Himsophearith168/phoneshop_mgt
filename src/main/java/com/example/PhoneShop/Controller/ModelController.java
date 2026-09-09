@@ -6,9 +6,11 @@ import com.example.PhoneShop.Entity.ModelEntity;
 import com.example.PhoneShop.Service.ModelService;
 import com.example.PhoneShop.Util.APIResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/models")
 @RequiredArgsConstructor
+@Validated
 public class ModelController {
     private final ModelService modelService;
 
@@ -31,7 +34,7 @@ public class ModelController {
     }
 
     @GetMapping("/brands/{brandId}")
-    public ResponseEntity<APIResponse<List<ModelEntity>>> getByBrand(@PathVariable("brandId") Long brandId) {
+    public ResponseEntity<APIResponse<List<ModelEntity>>> getByBrand(@PathVariable("brandId") @Positive(message = "Brand ID must be greater than 0") Long brandId) {
         List<ModelEntity> models = modelService.getByBrand(brandId);
         APIResponse<List<ModelEntity>> apiResponse = APIResponse.<List<ModelEntity>>builder()
                 .status(HttpStatus.OK.value())

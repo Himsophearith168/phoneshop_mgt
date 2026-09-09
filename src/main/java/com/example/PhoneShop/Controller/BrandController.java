@@ -7,10 +7,12 @@ import com.example.PhoneShop.Entity.BrandEntity;
 import com.example.PhoneShop.Service.BrandService;
 import com.example.PhoneShop.Util.APIResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,6 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/brands")
 @RequiredArgsConstructor
+@Validated
 public class BrandController {
     private final BrandService brandService;
 
@@ -45,7 +48,7 @@ public class BrandController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse<BrandResponse>> getBrandById(@PathVariable("id") Long id) {
+    public ResponseEntity<APIResponse<BrandResponse>> getBrandById(@PathVariable("id") @Positive(message = "Brand ID must be greater than 0") Long id) {
         BrandResponse brandResponse = brandService.getBrand(id);
         APIResponse<BrandResponse> apiResponse = APIResponse.<BrandResponse>builder()
                 .status(HttpStatus.OK.value())
@@ -57,7 +60,7 @@ public class BrandController {
 
     @PutMapping("/{id}")
     public ResponseEntity<APIResponse<BrandResponse>> updateBrand(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive(message = "Brand ID must be greater than 0") Long id,
             @Valid @RequestBody BrandRequest brandRequest) {
         BrandResponse brandResponse = brandService.updateBrand(id, brandRequest);
         APIResponse<BrandResponse> apiResponse = APIResponse.<BrandResponse>builder()
@@ -69,7 +72,7 @@ public class BrandController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse<Void>> deleteBrand(@PathVariable("id") Long id) {
+    public ResponseEntity<APIResponse<Void>> deleteBrand(@PathVariable("id") @Positive(message = "Brand ID must be greater than 0") Long id) {
         brandService.deleteBrand(id);
         APIResponse<Void> apiResponse = APIResponse.<Void>builder()
                 .status(HttpStatus.OK.value())

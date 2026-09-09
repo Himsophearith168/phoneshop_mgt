@@ -5,9 +5,11 @@ import com.example.PhoneShop.DTO.ColorResponse;
 import com.example.PhoneShop.Service.ColorService;
 import com.example.PhoneShop.Util.APIResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping({"/api/v1/colors", "colors"})
 @RequiredArgsConstructor
+@Validated
 public class ColorController {
 
     private final ColorService colorService;
@@ -42,7 +45,7 @@ public class ColorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse<ColorResponse>> getColorById(@PathVariable("id") Long id) {
+    public ResponseEntity<APIResponse<ColorResponse>> getColorById(@PathVariable("id") @Positive(message = "Color ID must be greater than 0") Long id) {
         ColorResponse colorResponse = colorService.getColor(id);
         APIResponse<ColorResponse> apiResponse = APIResponse.<ColorResponse>builder()
                 .status(HttpStatus.OK.value())
@@ -54,7 +57,7 @@ public class ColorController {
 
     @PutMapping("/{id}")
     public ResponseEntity<APIResponse<ColorResponse>> updateColor(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive(message = "Color ID must be greater than 0") Long id,
             @Valid @RequestBody ColorRequest colorRequest) {
         ColorResponse colorResponse = colorService.updateColor(id, colorRequest);
         APIResponse<ColorResponse> apiResponse = APIResponse.<ColorResponse>builder()
@@ -66,7 +69,7 @@ public class ColorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse<Void>> deleteColor(@PathVariable("id") Long id) {
+    public ResponseEntity<APIResponse<Void>> deleteColor(@PathVariable("id") @Positive(message = "Color ID must be greater than 0") Long id) {
         colorService.deleteColor(id);
         APIResponse<Void> apiResponse = APIResponse.<Void>builder()
                 .status(HttpStatus.OK.value())

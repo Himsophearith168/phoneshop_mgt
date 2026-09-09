@@ -69,6 +69,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse setSalePrice(Long id, BigDecimal price) {
+        if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new APIException(HttpStatus.BAD_REQUEST, "Price must be greater than 0");
+        }
         ProductEntity product = getProductById(id);
         product.setSalePrice(price);
         ProductEntity savedProduct = productRepository.save(product);
@@ -78,6 +81,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductResponse importProduct(ProductImportDTO importDTO) {
+        if (importDTO.getImportUnit() == null || importDTO.getImportUnit() <= 0) {
+            throw new APIException(HttpStatus.BAD_REQUEST, "Import unit must be greater than 0");
+        }
+        if (importDTO.getImportPrice() == null || importDTO.getImportPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new APIException(HttpStatus.BAD_REQUEST, "Price must be greater than 0");
+        }
         ProductEntity product = getProductById(importDTO.getProduct_id());
         int currentUnit = product.getAvailableUnit() == null ? 0 : product.getAvailableUnit();
         product.setAvailableUnit(currentUnit + importDTO.getImportUnit());

@@ -7,9 +7,11 @@ import com.example.PhoneShop.DTO.ProductResponse;
 import com.example.PhoneShop.Service.ProductService;
 import com.example.PhoneShop.Util.APIResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping({"/api/v1/products", "products"})
 @RequiredArgsConstructor
+@Validated
 public class ProductController {
 
     private final ProductService productService;
@@ -44,7 +47,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse<ProductResponse>> getProductById(@PathVariable("id") Long id) {
+    public ResponseEntity<APIResponse<ProductResponse>> getProductById(@PathVariable("id") @Positive(message = "Product ID must be greater than 0") Long id) {
         ProductResponse product = productService.getProduct(id);
         APIResponse<ProductResponse> apiResponse = APIResponse.<ProductResponse>builder()
                 .status(HttpStatus.OK.value())
@@ -56,8 +59,8 @@ public class ProductController {
 
     @PutMapping("/{id}/price")
     public ResponseEntity<APIResponse<ProductResponse>> setSalePrice(
-            @PathVariable("id") Long id,
-            @RequestBody PriceDTO priceDTO) {
+            @PathVariable("id") @Positive(message = "Product ID must be greater than 0") Long id,
+            @Valid @RequestBody PriceDTO priceDTO) {
         ProductResponse response = productService.setSalePrice(id, priceDTO.getPrice());
         APIResponse<ProductResponse> apiResponse = APIResponse.<ProductResponse>builder()
                 .status(HttpStatus.OK.value())
