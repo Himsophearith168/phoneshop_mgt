@@ -4,6 +4,7 @@ import com.example.PhoneShop.DTO.ModelRequest;
 import com.example.PhoneShop.DTO.ModelResponse;
 import com.example.PhoneShop.Entity.BrandEntity;
 import com.example.PhoneShop.Entity.ModelEntity;
+import com.example.PhoneShop.Exception.ResourceNotFoundException;
 import com.example.PhoneShop.Mapper.ModelMapper;
 import com.example.PhoneShop.Repository.ModelRepository;
 import com.example.PhoneShop.Service.BrandService;
@@ -32,5 +33,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<ModelEntity> getByBrand(Long brandId) {
         return modelRepository.findByBrandId(brandId);
+    }
+
+    @Override
+    public ModelEntity getById(Long id) {
+        return modelRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Model", "id", id));
     }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface ModelService {
     ModelResponse createModel(ModelRequest request);
     List<ModelEntity> getByBrand(Long brandId);
+    ModelEntity getById(Long id);
 }

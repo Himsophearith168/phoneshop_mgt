@@ -5,3 +5,8 @@ databaseChangeLog:
       file: classpath:db/changelog/002_insert_brands.yml
   - include:
       file: classpath:db/changelog/003_insert_models.yml
+  - include:
+      file: classpath:db/changelog/004_create_colors_table.yml
+  - include:
+      file: classpath:db/changelog/005_create_products_table.yml
+

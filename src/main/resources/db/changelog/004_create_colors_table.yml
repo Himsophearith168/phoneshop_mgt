@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004_create_colors_table
+      author: himsophearith44@gmail.com
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: colors
+      changes:
+        - createTable:
+            tableName: colors
+            columns:
+              - column:
+                  name: color_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: color_name
+                  type: VARCHAR(50)
