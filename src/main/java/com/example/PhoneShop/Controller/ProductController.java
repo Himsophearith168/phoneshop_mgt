@@ -13,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping({"/api/v1/products", "products"})
@@ -76,6 +78,17 @@ public class ProductController {
         APIResponse<ProductResponse> apiResponse = APIResponse.<ProductResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("Product imported successfully")
+                .data(response)
+                .build();
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @PostMapping("/uploadProducts")
+    public ResponseEntity<APIResponse<Map<Integer, String>>> uploadProduct(@RequestParam("file") MultipartFile file) {
+        Map<Integer, String> response = productService.uploadProduct(file);
+        APIResponse<Map<Integer, String>> apiResponse = APIResponse.<Map<Integer, String>>builder()
+                .status(HttpStatus.OK.value())
+                .message(response.isEmpty() ? "Product uploaded successfully" : "Product upload completed with some errors")
                 .data(response)
                 .build();
         return ResponseEntity.ok(apiResponse);
